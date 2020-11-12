@@ -2,7 +2,9 @@
 
 ![](assets/teaser.png)
 
-With the recent paced deep learning research, it is very difficult to keep oneself upto date with their topics of interest. This utility aims to bridge this gap to ensure easy access to the latest and greatest deep learning papers, relevant to the user's interests.
+![](assets/init-setup.gif)
+
+With the recent paced deep learning research, it is very difficult to keep yourself upto date with their topics of interest. This utility aims to bridge this gap to ensure easy access to the latest and greatest deep learning papers, relevant to the user's interests.
 
 **Key Features**
 
@@ -28,7 +30,7 @@ With the recent paced deep learning research, it is very difficult to keep onese
 
 **Update wallpaper and Database**
 
-- `python3 oh-my-dl.py -u` (or) `python3 oh-my-dl.py -update` - fetches latest papers to update database and modifies desktop background based on current user settings/interests. 
+- `python3 oh-my-dl.py -u` (or) `python3 oh-my-dl.py -update` - fetches latest papers to update database **(recommended: at least once a week)** and modifies desktop background based on current user settings/interests. 
 
 **Links for latest paper recommendations**
 
@@ -39,3 +41,10 @@ With the recent paced deep learning research, it is very difficult to keep onese
 - `python3 oh-my-dl.py -t` (or) `python3 oh-my-dl.py -trending` - fetches latest trending papers based on number of GitHub stars per hour in the corresponding paper repository.
 
 Since I am personally using this utility, I will try to keep it updated. Incase of feature requests and bugs, feel free to open a new issue. 
+
+## To DO
+
+- [ ] Check compatibility on Windows. (Currently tested on Ubuntu)
+- [ ] Analyse how recommendations vary over long usage.
+- [ ] Direct download of paper pdfs to local repository.
+- [ ] Add support for fetching relevant codebases for these papers if available.
