@@ -1,0 +1,5 @@
+__pycache__/
+.usr.pickle
+.tkn_corpus.pickle
+db.pickle
+wordcloud.png
