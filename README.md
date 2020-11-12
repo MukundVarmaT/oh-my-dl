@@ -8,7 +8,9 @@ Keeping up with the recent fast-paced deep learning research is very difficult, 
 
 - Builds local database of the latest deep learning papers (categories: cs.CV, cs.AI, cs.LG, cs.CL, cs.NE, stat.ML) from [arxiv](https://arxiv.org)
 - Query database for specific papers (filtered by title and abstract)
-- Sets your desktop background as a wordcloud of the recent papers **relevant to your interests** which is initially set by the user and **improved using recent queries**.
+- Sets your desktop background as a wordcloud of the recent papers **relevant to your interests** which is initially set by the user and **improved using recent queries**. 
+
+You can see some samples [here](assets/trailer.md)
 
 ## Usage
 
