@@ -1,10 +1,8 @@
 # OH-MY-DL
 
+Keeping up with the recent fast-paced deep learning research is very difficult, especially to track papers relevant to one's domain. This utility aims to bridge this gap and ensures easy access to the latest and greatest deep learning papers based on the user's interests. 
+
 ![](assets/teaser.png)
-
-![](assets/init_setup.gif)
-
-With the recent paced deep learning research, it is very difficult to keep yourself upto date with their topics of interest. This utility aims to bridge this gap to ensure easy access to the latest and greatest deep learning papers, relevant to the user's interests.
 
 **Key Features**
 
