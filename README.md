@@ -2,7 +2,7 @@
 
 ![](assets/teaser.png)
 
-![](assets/init-setup.gif)
+![](assets/init_setup.gif)
 
 With the recent paced deep learning research, it is very difficult to keep yourself upto date with their topics of interest. This utility aims to bridge this gap to ensure easy access to the latest and greatest deep learning papers, relevant to the user's interests.
 
