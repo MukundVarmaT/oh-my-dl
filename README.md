@@ -23,7 +23,7 @@ pip3 install -r requirements.txt
 Fetch recent papers from [arxiv](https://arxiv.org) (categories: categories: cs.CV, cs.AI, cs.LG, cs.CL, cs.NE, stat.ML) and update local database
 
 ```bash
-python3 oh-my-dl.py [-u/--update]
+python3 ohmydl.py [-u/--update]
 
 # in the first run, a base dataset is downloaded containing papers from 2018 and stored locally!
 ```
@@ -31,13 +31,13 @@ python3 oh-my-dl.py [-u/--update]
 Fetch latest trending papers based on number of GitHub stars per hour
 
 ```bash
-python3 oh-my-dl.py [-t/--trending]
+python3 ohmydl.py [-t/--trending]
 ```
 
 Query local database for specific types of papers and update background with top results. Each paper is indexed with a number for retrieving info and direct download.
 
 ```bash
-python3 oh-my-dl.py [-q/--query] "<query>"
+python3 ohmydl.py [-q/--query] "<query>"
 
 # In the case of multiple queries, seperate each by a semicolon. For example: 
 python3 ohmydl.py -q "transformers for image recognition; transformers for long range sequence modelling;"
@@ -46,13 +46,13 @@ python3 ohmydl.py -q "transformers for image recognition; transformers for long 
 Retrieve paper info by index (info: authors, journal, urls, abstract)
 
 ```bash
-python3 oh-my-dl.py [-i/--info] <index>
+python3 ohmydl.py [-i/--info] <index>
 ```
 
 Download paper by index to `.<path-to-cloned-repo>/pdfs/`
 
 ```bash
-python3 oh-my-dl.py [-d/--download] <index>
+python3 ohmydl.py [-d/--download] <index>
 ```
 
 ## Setting up alias
