@@ -2,3 +2,4 @@ __pycache__/
 .bm25.pickle
 db.pickle
 wordcloud.png
+pdfs/
