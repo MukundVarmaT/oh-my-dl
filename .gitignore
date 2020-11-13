@@ -1,5 +1,5 @@
 __pycache__/
-.usr.pickle
-.tkn_corpus.pickle
+.bm25.pickle
 db.pickle
 wordcloud.png
+teaser.png

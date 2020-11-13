@@ -1,8 +1,6 @@
-requests==2.22.0
-tqdm==4.30.0
-rank_bm25==0.2.1
-numpy==1.17.4
 feedparser==6.0.2
+requests==2.22.0
+numpy==1.17.4
+rank_bm25==0.2.1
 wordcloud==1.8.1
-scipy==1.4.1
 beautifulsoup4==4.9.3

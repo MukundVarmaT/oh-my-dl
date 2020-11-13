@@ -1,50 +1,32 @@
 # OH-MY-DL
 
-Keeping up with the recent fast-paced deep learning research is very difficult, especially to track papers relevant to one's domain. This utility aims to bridge this gap and ensures easy access to the latest and greatest deep learning papers based on the user's interests. 
+Simple set of python scripts to modify your desktop background to a wordcloud of deep learning papers based on trending research or user specified query.
 
-![](assets/teaser.png)
+![](teaser.png)
 
-**Key Features**
+**Update**
 
-- Builds local database of the latest deep learning papers (categories: cs.CV, cs.AI, cs.LG, cs.CL, cs.NE, stat.ML) from [arxiv](https://arxiv.org)
-- Query database for specific papers (filtered by title and abstract)
-- Sets your desktop background as a wordcloud of the recent papers **relevant to your interests** which is initially set by the user and **improved using recent queries**. 
-
-You can see some samples [here](assets/trailer.md)
-
-## Usage
+*This branch of the repository focuses on minimal, easy access and does not include the recommendation feature. While its quite fancy and useful to have such a feature, it quite computationally expensive to build embeddings, store them, etc and contradicts the "easy access to deep learning papers" idea. Incase anyone is interested you can checkout this [branch](https://github.com/MukundVarmaT/oh-my-dl/tree/with-reco).*
 
 **Installation**
 
+- `git clone https://github.com/MukundVarmaT/oh-my-dl.git`
 - `pip3 install -r requirements.txt`
 
-**Initial Setup**
+**Usage**
 
-- `git clone https://github.com/MukundVarmaT/oh-my-dl.git`
-- Download initial database from [link](https://drive.google.com/file/d/1cVNF0kWZ_SLtz1Z0HbZtvlFVsqVFk8mN/view?usp=sharing) - all papers after 2018, [link](https://drive.google.com/file/d/1kgusrA__7GI8unn3_ADK0gt6tJwjzNOb/view?usp=sharing) - smaller database with papers published in 2020. Rename and place in the cloned folder.
-- `python3 oh-my-dl.py -s` (or) `python3 oh-my-dl.py -setup` - create all files and setup user interests for initial recommendations.  
-
-**Query Database**
-
-- `python3 oh-my-dl.py -q` (or) `python3 oh-my-dl.py -query` - prompt to filter specific papers based on text query. Recommendations for the background are improved by tracking queries to match user's recent interests.
-
-**Update wallpaper and Database**
-
-- `python3 oh-my-dl.py -u` (or) `python3 oh-my-dl.py -update` - fetches latest papers to update database **(recommended: at least once a week)** and modifies desktop background based on current user settings/interests. 
-
-**Links for latest paper recommendations**
-
-- `python3 oh-my-dl.py -l` (or) `python3 oh-my-dl.py -links` - fetches links to the last updated recommendations. **Note**: You need to run the previous update command to receive latest recommendations.
-
-**Fetch Latest Trending**
-
-- `python3 oh-my-dl.py -t` (or) `python3 oh-my-dl.py -trending` - fetches latest trending papers based on number of GitHub stars per hour in the corresponding paper repository.
+- `python3 oh-my-dl.py -u` (or) `python3 oh-my-dl.py --update` - fetches recent papers and updates local database. *(In the first usage, a base dataset containing papers from 2018 is downloaded and stored)*
+- `python3 oh-my-dl.py -t` (or) `python3 oh-my-dl.py --trending` - Fetch latest trending deep learning papers. *(Based on number of GitHub stars per hour)* 
+- `python3 oh-my-dl.py -q <blah-blah; blah-blah; ....>` (or) `python3 oh-my-dl.py --query <blah-blah; blah-blah; ....>` - query local database and update background with top fetched results. *(Each paper is indexed for retrieving info and downloads)*  For example: `python3 ohmydl.py -q "transformers for image recognition; transformers for long range sequence modelling;"`
+- `python3 oh-my-dl.py -i <...>` (or) `python3 oh-my-dl.py --info <...>` - retrieve info about paper at a particular index. (authors, journal, official code base (if any), abstract)
+- `python3 oh-my-dl.py -d <...>` (or) `python3 oh-my-dl.py --download <...>` - download paper at a particular index to `./pdfs/` *(indices are visible on the background)*
 
 Since I am personally using this utility, I will try to keep it updated. Incase of feature requests and bugs, feel free to open a new issue. 
 
-## To DO
+**Setting up alias**
 
-- [ ] Check compatibility on Windows. (Currently tested on Ubuntu)
-- [ ] Analyse how recommendations vary over long usage.
-- [ ] Direct download of paper pdfs to local repository.
-- [ ] Add support for fetching relevant codebases for these papers if available.
+Add `alias ohmydl="python3 <path to cloned folder>/ohmydl.py $@" ` to your `.bashrc` or `.zshrc`. After adding the alias, all commands which looked like `python3 ohmydl.py blah..blah..` will now become `ohmydl blah..blah..` and can be run from any directory. 
+
+**Auto update using Crontab**
+
+Schedule new job by entering `crontab -e` and add `<frequency> /usr/bin/python3 <path-to-cloned-repo>/ohmydl.py -u > /dev/null 2>&1`. For example, to update every Monday at 1 am `0 1 * * 1 /usr/bin/python3 <path-to-cloned-repo>/ohmydl.py -u > /dev/null 2>&1`.

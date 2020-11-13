@@ -1,26 +1,31 @@
 import pickle
 import feedparser
-import re
 from datetime import datetime
-import numpy as np
-from collections import Counter
+import re
 import requests
 from bs4 import BeautifulSoup
-from typing import Dict, List
-import json
 
-FG_COLOR = {
-    "red" : "\x1b[31m",
-    "green" : "\x1b[92m",
-    "yellow" : "\x1b[33m",
-    "end" : "\033[0m"
-}
-BG_COLOR = {
-    "red" : "\x1b[41m",
-    "green" : "\x1b[42m",
-    "yellow" : "\x1b[43m",
-    "end" : "\033[0m"
-}
+def download(url, path):
+    response = requests.get(url, stream=True, verify=False)
+    total_size = int(response.headers.get('content-length', 0))
+    chunk_size = 1024 * 1024
+    i = 0
+    with open(path, "wb") as handle:
+        for data in response.iter_content(chunk_size=chunk_size):
+            progress_bar(i/total_size, status="downloading data...")
+            handle.write(data)
+            i+=chunk_size
+        progress_bar(1)
+        
+
+# simple progress bar without tqdm :P
+def progress_bar(progress = 0, status = "", bar_len = 20):
+    status = status.ljust(30)
+    if progress == 1:
+        status = "{}\r\n".format("Done...".ljust(30))
+    block = int(round(bar_len*progress))
+    text = "\rProgress: [{}] {}% {}".format( "#"*block + "-"*(bar_len-block), round(progress*100,2), status)
+    print(text, end="")
 
 # save as pickle file
 def save_pickle(file_path, x):
@@ -64,18 +69,13 @@ def convert_to_datetime(date):
     date = datetime.strptime(date, '%Y-%m-%d').date()
     return date
 
+# parse arxiv url of format https://arxiv.org/abs/1904.07399v3 --> https://arxiv.org/pdf/1904.07399
 def parse_arxiv_url(url):
   id = url.rsplit("/",1)[1]
   url = f"https://arxiv.org/pdf/{id.split('v')[0]}"
   return url
 
-# embeddings
-MAX_BATCH_SIZE = 16
-URL = "https://model-apis.semanticscholar.org/specter/v1/invoke"
-def split_chunks(paper_list, chunk_size=MAX_BATCH_SIZE):
-    for i in range(0, len(paper_list), chunk_size):
-        yield paper_list[i : i + chunk_size]
-
+# filter abstract containing repository links, equations.
 def filter_abstract(abstract):
     abstract = re.sub(r'^https?:\/\/.*[\r\n]*', '[LINK]', abstract, flags=re.MULTILINE)
     abstract = re.sub(r"[\(\[].*?[\)\]]", "", abstract)
@@ -83,22 +83,14 @@ def filter_abstract(abstract):
     abstract = " ".join(abstract.split())
     return abstract
 
-def embed(papers):
-    embeddings: Dict[str, List[float]] = {}
-    for chunk in split_chunks(papers):
-        response = requests.post(URL, json=chunk)
-        if response.status_code != 200:
-            return None
-        for paper in response.json()["preds"]:
-            embeddings[paper["paper_id"]] = paper["embedding"]
-    # convert dict to array
-    embeddings = list(dict(sorted(embeddings.items())).values()) # sorting for sanity sakes
-    embeddings = [np.array(e).reshape((1,-1)) for e in embeddings]
-    return embeddings
-
-def softmax(x):
-    e_x = np.exp(x - np.max(x))
-    return e_x / e_x.sum()
+# retrieve relevant urls from abstract
+def extract_url(abstract, title):
+    url = re.findall(r"\b((?:https?://)?(?:(?:www\.)?(?:[\da-z\.-]+)\.(?:[a-z]{2,6})|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(?:(?:[0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|(?:[0-9a-fA-F]{1,4}:){1,7}:|(?:[0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|(?:[0-9a-fA-F]{1,4}:){1,5}(?::[0-9a-fA-F]{1,4}){1,2}|(?:[0-9a-fA-F]{1,4}:){1,4}(?::[0-9a-fA-F]{1,4}){1,3}|(?:[0-9a-fA-F]{1,4}:){1,3}(?::[0-9a-fA-F]{1,4}){1,4}|(?:[0-9a-fA-F]{1,4}:){1,2}(?::[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:(?:(?::[0-9a-fA-F]{1,4}){1,6})|:(?:(?::[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(?::[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(?:ffff(?::0{1,4}){0,1}:){0,1}(?:(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9])|(?:[0-9a-fA-F]{1,4}:){1,4}:(?:(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9])))(?::[0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])?(?:/[\w\.-]*)*/?)\b", abstract) 
+    url = [u for u in url if "github" in u]
+    if len(url)!=0:
+        return ", ".join(url)
+    else:
+        return ""
 
 def get_recent_trending():
     URL = 'https://paperswithcode.com/'
