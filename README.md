@@ -28,7 +28,13 @@ python3 ohmydl.py [-u/--update]
 # in the first run, a base dataset is downloaded containing papers from 2018 and stored locally!
 ```
 
-Fetch latest trending papers based on number of GitHub stars per hour
+Fetch latest trending papers (based on number of GitHub stars per hour)
+
+```bash
+python3 ohmydl.py [-t/--trending]
+```
+
+Fetch recent papers (last updated from arxiv)
 
 ```bash
 python3 ohmydl.py [-t/--trending]
@@ -53,6 +59,32 @@ Download paper by index to `.<path-to-cloned-repo>/pdfs/`
 
 ```bash
 python3 ohmydl.py [-d/--download] <index>
+```
+
+Modifiable parameters can be found [here](./ohmydl.py)
+
+```python
+# path for storing local database (default: <path-to-cloned-repo/db.pickle) 
+DB_PATH = f"{os.path.dirname(os.path.realpath(__file__))}/db.pickle"
+
+# max iterations to scrap data from arxiv
+MAX_ITER = 10000
+
+# paper categories can be modified here.  
+# refer https://arxiv.org/help/api/user-manual#Subject%20Classifications for more details
+DEF_QUERY = "cat:cs.CV+OR+cat:cs.AI+OR+cat:cs.LG+OR+cat:cs.CL+OR+cat:cs.NE+OR+cat:stat.ML"
+
+# maximum number of papers to be displayed on background
+MAX_FOUND = 20
+
+# path to download pdfs (default: <path-to-cloned-repo/pdfs/) 
+PDF_DOWNLOAD = f"{os.path.dirname(os.path.realpath(__file__))}/pdfs"
+
+# wordcloud properties
+# background color (default: dark - #101010 light - #FFFFFF)
+BACKGROUND = "#101010"
+# min font size of displayed text
+MIN_FONT_SIZE = 8
 ```
 
 ## Setting up alias
