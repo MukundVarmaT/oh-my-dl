@@ -1,6 +1,6 @@
 # OH-MY-DL
 
-Simple set of python scripts to modify your desktop background to a wordcloud of deep learning papers based on trending research or user specified query.
+Simple set of python scripts to modify your desktop background to a textcloud of deep learning papers based on trending research or user specified query.
 
 ![](teaser.png)
 
@@ -61,6 +61,17 @@ Download paper by index to `.<path-to-cloned-repo>/pdfs/`
 python3 ohmydl.py [-d/--download] <index>
 ```
 
+## Setting up alias
+
+- Add `alias ohmydl="python3 <path to cloned folder>/ohmydl.py $@" ` to your `.bashrc` or `.zshrc`. 
+- After adding the alias, all commands which looked like `python3 ohmydl.py blah..blah..` will now become `ohmydl blah..blah..` and can be run from any directory. 
+
+## Auto update using Crontab
+
+- Schedule new job by entering `crontab -e` and add `<frequency> /usr/bin/python3 <path-to-cloned-repo>/ohmydl.py -u > /dev/null 2>&1`. 
+- For example, to update every Monday at 1 am `0 1 * * 1 /usr/bin/python3 <path-to-cloned-repo>/ohmydl.py -u > /dev/null 2>&1`.
+
+
 Modifiable parameters can be found [here](./ohmydl.py)
 
 ```python
@@ -80,21 +91,11 @@ MAX_FOUND = 20
 # path to download pdfs (default: <path-to-cloned-repo/pdfs/) 
 PDF_DOWNLOAD = f"{os.path.dirname(os.path.realpath(__file__))}/pdfs"
 
-# wordcloud properties
-# background color (default: dark - #101010 light - #FFFFFF)
+# background properties
+# color (default: dark - #101010 light - #FFFFFF)
 BACKGROUND = "#101010"
 # min font size of displayed text
 MIN_FONT_SIZE = 8
 ```
-
-## Setting up alias
-
-- Add `alias ohmydl="python3 <path to cloned folder>/ohmydl.py $@" ` to your `.bashrc` or `.zshrc`. 
-- After adding the alias, all commands which looked like `python3 ohmydl.py blah..blah..` will now become `ohmydl blah..blah..` and can be run from any directory. 
-
-## Auto update using Crontab
-
-- Schedule new job by entering `crontab -e` and add `<frequency> /usr/bin/python3 <path-to-cloned-repo>/ohmydl.py -u > /dev/null 2>&1`. 
-- For example, to update every Monday at 1 am `0 1 * * 1 /usr/bin/python3 <path-to-cloned-repo>/ohmydl.py -u > /dev/null 2>&1`.
 
 Since I am personally using this utility, I will try to keep it updated. Incase of feature requests and bugs, feel free to open a new issue.
