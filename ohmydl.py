@@ -127,7 +127,7 @@ def search_query(query):
     except:
         raise Exception("Cached files not found. Run update command!")
     
-    query = query.split(";")
+    query = query.lower().split(";")
     n_per_query = math.ceil(MAX_FOUND/len(query))
     titles = []
     weights = []
@@ -163,7 +163,7 @@ def get_info(id):
     else:
         raise Exception("Invalid ID")
 
-def download(id):
+def download(id):   
     try:
         db = utils.load_pickle(DB_PATH)
     except:
@@ -186,17 +186,29 @@ def trending():
     weights = []
     for title in recent:
         try:
-            indx = db["title"].index(utils.rem_tex_fmt(title))
-            titles.append(title)
+            ind = db["title"].index(utils.rem_tex_fmt(title))
+            titles.append(f"{db['title'][ind]} ({ind})")
         except:
             continue
     weights = [_ for _ in range(len(titles), 0, -1)]
+    set_wallpaper(dict(zip(titles, weights))) 
+
+def new():
+    try:
+        db = utils.load_pickle(DB_PATH)
+    except:
+        raise Exception("Cached files not found. Run update command!")
+    titles = []
+    for ind in range(len(db["url"])-MAX_FOUND, len(db["url"])):
+        titles.append(f"{db['title'][ind]} ({ind})")
+    weights = [_ for _ in range(len(titles))]
     set_wallpaper(dict(zip(titles, weights))) 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="OH-MY-DL: command line toolkit to keep up with recent trends in DL")
     parser.add_argument("-u", "--update", action="store_true", help="Update database")
     parser.add_argument("-t", "--trending", action="store_true", help="Fetch trending")
+    parser.add_argument("-n", "--new", action="store_true", help="Fetch latest")
     parser.add_argument("-q", "--query", default=None, type=str, help="Query database (semi-colon seperated) and update background")
     parser.add_argument("-i", "--info", default=None, type=int, help="Return paper info by id")
     parser.add_argument("-d", "--download", default=None, type=int, help="Download paper pdf by id")
@@ -208,6 +220,9 @@ if __name__ == "__main__":
         exit()
     if args.trending:
         trending()
+        exit()
+    if args.new:
+        new()
         exit()
         
     if args.query:
