@@ -96,6 +96,8 @@ PDF_DOWNLOAD = f"{os.path.dirname(os.path.realpath(__file__))}/pdfs"
 BACKGROUND = "#101010"
 # min font size of displayed text
 MIN_FONT_SIZE = 8
+# border padding to ensure all text is visible
+MARGIN = 30
 ```
 
 Since I am personally using this utility, I will try to keep it updated. Incase of feature requests and bugs, feel free to open a new issue.

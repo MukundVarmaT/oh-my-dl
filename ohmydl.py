@@ -9,6 +9,7 @@ from rank_bm25 import BM25Okapi
 import math
 import os
 from wordcloud import WordCloud
+from PIL import Image
 warnings.filterwarnings("ignore")
 
 DB_PATH = f"{os.path.dirname(os.path.realpath(__file__))}/db.pickle"
@@ -143,11 +144,14 @@ def set_wallpaper(data):
         background_color=BACKGROUND,
         width=WIDTH - 2*MARGIN,
         height=HEIGHT - 2*MARGIN,
-        margin=MARGIN,
         min_font_size=MIN_FONT_SIZE,
-        prefer_horizontal=0.5
+        prefer_horizontal=0.7
     ).generate_from_frequencies(data)
     wordcloud.to_file(WORDCLOUD_PATH)
+    background = Image.new("RGB", (WIDTH, HEIGHT), BACKGROUND)
+    wordcloud = Image.open(WORDCLOUD_PATH, "r").convert("RGB")
+    background.paste(wordcloud, (MARGIN, MARGIN))
+    background.save(WORDCLOUD_PATH)
     os.system(f"gsettings set org.gnome.desktop.background picture-uri file://{WORDCLOUD_PATH}")
 
 def get_info(id):
