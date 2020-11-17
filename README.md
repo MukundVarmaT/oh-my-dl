@@ -72,9 +72,12 @@ python3 ohmydl.py [-d/--download] <index>
 - For example, to update every Monday at 1 am `0 1 * * 1 /usr/bin/python3 <path-to-cloned-repo>/ohmydl.py -u > /dev/null 2>&1`.
 
 
-Modifiable parameters can be found [here](./ohmydl.py)
+## Modifiable parameters
+
+can be found [here](./ohmydl.py)
 
 ```python
+
 # path for storing local database (default: <path-to-cloned-repo/db.pickle) 
 DB_PATH = f"{os.path.dirname(os.path.realpath(__file__))}/db.pickle"
 
@@ -100,4 +103,4 @@ MIN_FONT_SIZE = 8
 MARGIN = 30
 ```
 
-Since I am personally using this utility, I will try to keep it updated. Incase of feature requests and bugs, feel free to open a new issue.
+**Since I am personally using this utility, I will try to keep it updated. Incase of feature requests and bugs, feel free to open a new issue.**
