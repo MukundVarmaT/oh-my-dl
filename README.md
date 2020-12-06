@@ -55,7 +55,7 @@ Retrieve paper info by index (info: authors, journal, urls, abstract)
 python3 ohmydl.py [-i/--info] <index>
 ```
 
-Download paper by index to `.<path-to-cloned-repo>/pdfs/`
+Download paper by index to `<path-to-cloned-repo>/pdfs/`
 
 ```bash
 python3 ohmydl.py [-d/--download] <index>

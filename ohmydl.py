@@ -98,7 +98,7 @@ def update():
             utils.progress_bar(1) 
         else:
             indx += 100
-            utils.progress_bar(indx/MAX_ITER, status=f"Last updated {date}...") 
+            utils.progress_bar(indx/MAX_ITER, status=f"Fetching papers from {date}...") 
         time.sleep(WAIT_TIME)
     print(f"{n_added} papers added to database")
 
@@ -238,8 +238,3 @@ if __name__ == "__main__":
     else:
         parser.print_help()
         exit()
-
-
-
-        
-    

@@ -72,9 +72,9 @@ def convert_to_datetime(date):
 
 # parse arxiv url of format https://arxiv.org/abs/1904.07399v3 --> https://arxiv.org/pdf/1904.07399
 def parse_arxiv_url(url):
-  id = url.rsplit("/",1)[1]
-  url = f"https://arxiv.org/pdf/{id.split('v')[0]}"
-  return url
+    id = url.rsplit("/",1)[1]
+    url = f"https://arxiv.org/pdf/{id.split('v')[0]}"
+    return url
 
 # filter abstract containing repository links, equations.
 def filter_abstract(abstract):
