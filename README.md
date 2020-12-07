@@ -17,6 +17,9 @@ cd oh-my-dl/
 
 # install dependencies
 pip3 install -r requirements.txt
+
+# first run (downloads database containing papers from 2018)
+python3 ohmydl.py -u
 ```
 ## Usage
 
