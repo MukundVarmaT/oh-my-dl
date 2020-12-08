@@ -10,23 +10,8 @@ import math
 import os
 from wordcloud import WordCloud
 from PIL import Image
+from config import *
 warnings.filterwarnings("ignore")
-
-DB_PATH = f"{os.path.dirname(os.path.realpath(__file__))}/db.pickle"
-DB_URL = "https://www.dropbox.com/s/kpdooiuvfw507e5/db.pickle?dl=1"
-WORDCLOUD_PATH = f"{os.path.dirname(os.path.realpath(__file__))}/wordcloud.png"
-MAX_ITER = 10000
-BASE_URL = "http://export.arxiv.org/api/query?"
-DEF_QUERY = "cat:cs.CV+OR+cat:cs.AI+OR+cat:cs.LG+OR+cat:cs.CL+OR+cat:cs.NE+OR+cat:stat.ML"
-QUERY_FMT = "search_query={}&sortBy=submittedDate&start={}&max_results={}"
-RESULTS_PER_ITER = 100
-WAIT_TIME = 5.0
-CACHE_BM25 = f"{os.path.dirname(os.path.realpath(__file__))}/.bm25.pickle"
-MAX_FOUND = 20
-PDF_DOWNLOAD = f"{os.path.dirname(os.path.realpath(__file__))}/pdfs"
-BACKGROUND = "#101010"
-MIN_FONT_SIZE = 8
-MARGIN = 30
 
 try:
     WIDTH, HEIGHT = ((os.popen("xrandr | grep '*'").read()).split()[0]).split("x")

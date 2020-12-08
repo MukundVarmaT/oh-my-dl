@@ -40,7 +40,7 @@ python3 ohmydl.py [-t/--trending]
 Fetch recent papers (last updated from arxiv)
 
 ```bash
-python3 ohmydl.py [-t/--trending]
+python3 ohmydl.py [-n/--new]
 ```
 
 Query local database for specific types of papers and update background with top results. Each paper is indexed with a number for retrieving info and direct download.
