@@ -77,32 +77,20 @@ python3 ohmydl.py [-d/--download] <index>
 
 ## Modifiable parameters
 
-can be found [here](./ohmydl.py)
+can be found [here](./config.py)
 
 ```python
-
-# path for storing local database (default: <path-to-cloned-repo/db.pickle) 
-DB_PATH = f"{os.path.dirname(os.path.realpath(__file__))}/db.pickle"
-
-# max iterations to scrap data from arxiv
-MAX_ITER = 10000
-
-# paper categories can be modified here.  
-# refer https://arxiv.org/help/api/user-manual#Subject%20Classifications for more details
+# category selection (refer https://arxiv.org/help/api/user-manual#Subject%20Classifications for more details)
 DEF_QUERY = "cat:cs.CV+OR+cat:cs.AI+OR+cat:cs.LG+OR+cat:cs.CL+OR+cat:cs.NE+OR+cat:stat.ML"
-
-# maximum number of papers to be displayed on background
+# max number of results to disply
 MAX_FOUND = 20
-
-# path to download pdfs (default: <path-to-cloned-repo/pdfs/) 
+# path to download pdf
 PDF_DOWNLOAD = f"{os.path.dirname(os.path.realpath(__file__))}/pdfs"
-
-# background properties
-# color (default: dark - #101010 light - #FFFFFF)
+# background color for wordcloud
 BACKGROUND = "#101010"
-# min font size of displayed text
+# min font size for the text cloud
 MIN_FONT_SIZE = 8
-# border padding to ensure all text is visible
+# margin to fit the background into screen
 MARGIN = 30
 ```
 
