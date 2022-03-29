@@ -3,3 +3,5 @@ __pycache__/
 db.pickle
 wordcloud.png
 pdfs/
+.gitignore
+results/
