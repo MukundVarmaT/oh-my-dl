@@ -3,14 +3,18 @@ import utils
 import warnings
 import urllib
 import time
+import json
 import feedparser
 import numpy as np
+import pandas as pd
 from rank_bm25 import BM25Okapi
 import math
 import os
+import webbrowser
 from wordcloud import WordCloud
 from PIL import Image
 from config import *
+from datetime import datetime as dt
 warnings.filterwarnings("ignore")
 
 try:
@@ -117,13 +121,28 @@ def search_query(query):
     n_per_query = math.ceil(MAX_FOUND/len(query))
     titles = []
     weights = []
+    dates = []
+    urls = []
     for q in query:
         top_ind = bm25.get_top_n(q.split(" "), list(range(len(db["url"]))), n_per_query)
         for ind in top_ind:
-            titles.append(f"{db['title'][ind]} ({ind})")
-        weights.extend([_ for _ in range(n_per_query, 0, -1)])  
-    set_wallpaper(dict(zip(titles, weights)))  
-
+            titles.append(f"{db['title'][ind]}")
+            dates.append(f"{db['date'][ind]}")
+            urls.append(f"{db['url'][ind]}")
+        weights.extend([_ for _ in range(n_per_query, 0, -1)]) 
+    
+    dfdata = {'title': titles, 'date': dates, 'url': urls}
+    df = pd.DataFrame(dfdata)
+    html = df.to_html(render_links=True)
+    
+    fname = f'{os.getcwd()}/results/{query[0]}.html'
+    os.makedirs(f'{os.getcwd()}/results', exist_ok=True)
+    with open(fname, 'w') as f:
+        f.write(html)
+        
+    webbrowser.open(f'file://{fname}', new=2)
+    
+    
 def set_wallpaper(data):
     wordcloud = WordCloud(
         background_color=BACKGROUND,
@@ -223,3 +242,4 @@ if __name__ == "__main__":
     else:
         parser.print_help()
         exit()
+    
